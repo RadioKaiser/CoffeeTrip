@@ -74,13 +74,13 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-beige-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gold"
+              className="md:hidden bg-gold text-white px-4 py-2 rounded-full text-base font-medium hover:bg-terracotta transition-all duration-300 shadow-2xl hover:shadow-gold/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-espresso-dark"
               onClick={toggleMobileMenu}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
             >
-              {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+              {mobileMenuOpen ? <CloseIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -94,7 +94,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
+              className="md:hidden overflow-hidden bg-espresso-dark text-beige-light shadow-2xl rounded-b-2xl rounded-t-2xl mt-3"
             >
               <ul className="py-4 space-y-2" role="list">
                 {NAV_ITEMS.map((item) => (
@@ -102,7 +102,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
                     <a
                       href={`#${item.id}`}
                       onClick={(e) => handleNavClick(e, item.id)}
-                      className="block py-3 px-4 rounded-lg hover:bg-beige-medium transition-colors focus:outline-none focus:bg-beige-medium font-serif"
+                      className="block py-3 px-4 rounded-lg hover:bg-espresso-medium transition-colors focus:outline-none focus:bg-espresso-medium font-serif text-beige-light"
                     >
                       {item.label}
                     </a>
