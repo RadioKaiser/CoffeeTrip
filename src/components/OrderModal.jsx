@@ -1,157 +1,302 @@
+import { memo, useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
+import { CloseIcon } from './icons';
 
-const OrderModal = ({ isOpen, onClose }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    street: '',
-    city: ''
-  });
+const INITIAL_FORM_STATE = {
+  name: '',
+  phone: '',
+  street: '',
+  city: ''
+};
 
-  const handleSubmit = (e) => {
+const OrderModal = memo(({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState(INITIAL_FORM_STATE);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const modalRef = useRef(null);
+  const firstInputRef = useRef(null);
+
+  useLockBodyScroll(isOpen);
+
+  // Focus trap
+  useEffect(() => {
+    if (isOpen && firstInputRef.current) {
+      firstInputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  // Handle Escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      return () => document.removeEventListener('keydown', handleEscape);
+    }
+  }, [isOpen, onClose]);
+
+  const validatePhone = (phone) => {
+    const cleaned = phone.replace(/\D/g, '');
+    return cleaned.length >= 10 && cleaned.length <= 12;
+  };
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
-    console.log('Order submitted:', formData);
-    // Здесь можно добавить отправку на сервер
-    alert(`Спасибо, ${formData.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${formData.phone}`);
-    setFormData({ name: '', phone: '', street: '', city: '' });
-    onClose();
-  };
+    
+    const newErrors = {};
+    if (!formData.name.trim()) {
+      newErrors.name = 'Введите имя';
+    }
+    if (!validatePhone(formData.phone)) {
+      newErrors.phone = 'Введите корректный номер телефона';
+    }
+    if (!formData.street.trim()) {
+      newErrors.street = 'Введите адрес';
+    }
+    if (!formData.city.trim()) {
+      newErrors.city = 'Введите город';
+    }
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrors({});
+
+    // Имитация отправки на сервер
+    await new Promise(resolve => setTimeout(resolve, 1500));
+
+    setFormData(INITIAL_FORM_STATE);
+    setIsSubmitting(false);
+    onClose();
+    
+    // Показать уведомление
+    alert(`Спасибо, ${formData.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${formData.phone}`);
+  }, [formData, onClose]);
+
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Очистить ошибку при изменении
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  }, [errors]);
+
+  const handleBackdropClick = useCallback((e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }, [onClose]);
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          className="fixed inset-0 z-50 flex items-center justify-center"
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
-            className="fixed inset-0 bg-espresso-dark/80 backdrop-blur-sm z-50"
+            onClick={handleBackdropClick}
+            className="absolute inset-0 bg-espresso-dark/80 backdrop-blur-sm"
+            aria-hidden="true"
           />
 
           {/* Modal */}
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
-            onClick={(e) => e.stopPropagation()}
+            className="relative bg-beige-light rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 max-h-[90vh] overflow-y-auto"
           >
-            <div className="bg-beige-light rounded-3xl shadow-2xl max-w-md w-full p-8 relative">
-              {/* Close Button */}
-              <motion.button
-                onClick={onClose}
-                className="absolute top-4 right-4 text-espresso-medium hover:text-espresso-dark transition-colors"
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </motion.button>
+            {/* Close Button */}
+            <motion.button
+              onClick={onClose}
+              className="absolute top-4 right-4 text-espresso-medium hover:text-espresso-dark transition-colors focus:outline-none focus:ring-2 focus:ring-gold rounded-full p-1"
+              whileHover={{ scale: 1.1, rotate: 90 }}
+              whileTap={{ scale: 0.9 }}
+              aria-label="Закрыть"
+            >
+              <CloseIcon />
+            </motion.button>
 
-              {/* Header */}
-              <div className="text-center mb-8">
-                <h2 className="text-4xl font-serif text-espresso-dark mb-2">
-                  Оформить заказ
-                </h2>
-                <div className="w-16 h-1 bg-gold mx-auto mb-4" />
-                <p className="text-espresso-medium">
-                  Заполните форму и мы свяжемся с вами
-                </p>
+            {/* Header */}
+            <div className="text-center mb-8">
+              <h2 id="modal-title" className="text-4xl font-serif text-espresso-dark mb-2">
+                Оформить заказ
+              </h2>
+              <div className="w-16 h-1 bg-gold mx-auto mb-4" aria-hidden="true" />
+              <p className="text-espresso-medium">
+                Заполните форму и мы свяжемся с вами
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+              <div>
+                <label htmlFor="order-name" className="block text-sm font-medium text-espresso-dark mb-2">
+                  Имя <span className="text-terracotta" aria-hidden="true">*</span>
+                </label>
+                <input
+                  ref={firstInputRef}
+                  type="text"
+                  id="order-name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                  className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
+                    errors.name 
+                      ? 'border-terracotta focus:border-terracotta' 
+                      : 'border-beige-dark focus:border-gold'
+                  }`}
+                  placeholder="Иван Иванов"
+                  disabled={isSubmitting}
+                />
+                {errors.name && (
+                  <p id="name-error" className="mt-1 text-sm text-terracotta" role="alert">
+                    {errors.name}
+                  </p>
+                )}
               </div>
 
-              {/* Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-espresso-dark mb-2">
-                    Имя
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white border-2 border-beige-dark focus:border-gold focus:outline-none transition-colors text-espresso-dark"
-                    placeholder="Иван Иванов"
-                  />
-                </div>
+              <div>
+                <label htmlFor="order-phone" className="block text-sm font-medium text-espresso-dark mb-2">
+                  Телефон <span className="text-terracotta" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="order-phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={errors.phone ? 'phone-error' : undefined}
+                  inputMode="tel"
+                  autoComplete="tel"
+                  className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
+                    errors.phone 
+                      ? 'border-terracotta focus:border-terracotta' 
+                      : 'border-beige-dark focus:border-gold'
+                  }`}
+                  placeholder="+7 (999) 123-45-67"
+                  disabled={isSubmitting}
+                />
+                {errors.phone && (
+                  <p id="phone-error" className="mt-1 text-sm text-terracotta" role="alert">
+                    {errors.phone}
+                  </p>
+                )}
+              </div>
 
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-espresso-dark mb-2">
-                    Телефон
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white border-2 border-beige-dark focus:border-gold focus:outline-none transition-colors text-espresso-dark"
-                    placeholder="+7 (999) 123-45-67"
-                  />
-                </div>
+              <div>
+                <label htmlFor="order-street" className="block text-sm font-medium text-espresso-dark mb-2">
+                  Улица и дом <span className="text-terracotta" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="order-street"
+                  name="street"
+                  value={formData.street}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.street}
+                  aria-describedby={errors.street ? 'street-error' : undefined}
+                  autoComplete="street-address"
+                  className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
+                    errors.street 
+                      ? 'border-terracotta focus:border-terracotta' 
+                      : 'border-beige-dark focus:border-gold'
+                  }`}
+                  placeholder="ул. Пушкина, д. 15"
+                  disabled={isSubmitting}
+                />
+                {errors.street && (
+                  <p id="street-error" className="mt-1 text-sm text-terracotta" role="alert">
+                    {errors.street}
+                  </p>
+                )}
+              </div>
 
-                <div>
-                  <label htmlFor="street" className="block text-sm font-medium text-espresso-dark mb-2">
-                    Улица и дом
-                  </label>
-                  <input
-                    type="text"
-                    id="street"
-                    name="street"
-                    value={formData.street}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white border-2 border-beige-dark focus:border-gold focus:outline-none transition-colors text-espresso-dark"
-                    placeholder="ул. Пушкина, д. 15"
-                  />
-                </div>
+              <div>
+                <label htmlFor="order-city" className="block text-sm font-medium text-espresso-dark mb-2">
+                  Город <span className="text-terracotta" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="order-city"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                  aria-required="true"
+                  aria-invalid={!!errors.city}
+                  aria-describedby={errors.city ? 'city-error' : undefined}
+                  autoComplete="address-level2"
+                  className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
+                    errors.city 
+                      ? 'border-terracotta focus:border-terracotta' 
+                      : 'border-beige-dark focus:border-gold'
+                  }`}
+                  placeholder="Москва"
+                  disabled={isSubmitting}
+                />
+                {errors.city && (
+                  <p id="city-error" className="mt-1 text-sm text-terracotta" role="alert">
+                    {errors.city}
+                  </p>
+                )}
+              </div>
 
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-espresso-dark mb-2">
-                    Город
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white border-2 border-beige-dark focus:border-gold focus:outline-none transition-colors text-espresso-dark"
-                    placeholder="Москва"
-                  />
-                </div>
-
-                <motion.button
-                  type="submit"
-                  className="w-full bg-gold text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-terracotta transition-colors duration-300 shadow-lg mt-6"
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Отправить заказ
-                </motion.button>
-              </form>
-            </div>
+              <motion.button
+                type="submit"
+                className="w-full bg-gold text-white px-6 py-4 rounded-xl text-lg font-medium hover:bg-terracotta transition-colors duration-300 shadow-lg mt-6 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+                whileHover={{ scale: isSubmitting ? 1 : 1.02, y: isSubmitting ? 0 : -2 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Отправка...
+                  </span>
+                ) : (
+                  'Отправить заказ'
+                )}
+              </motion.button>
+            </form>
           </motion.div>
-        </>
+        </div>
       )}
     </AnimatePresence>
   );
-};
+});
+
+OrderModal.displayName = 'OrderModal';
 
 export default OrderModal;
