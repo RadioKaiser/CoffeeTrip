@@ -65,7 +65,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={onOrderClick}
-              className="bg-gold text-white px-6 py-2 rounded-full hover:bg-terracotta transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
+              className="bg-gold text-white px-6 rounded-full h-10 inline-flex items-center justify-center leading-none hover:bg-terracotta transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -74,7 +74,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden bg-gold text-white px-4 py-2 rounded-full text-base font-medium hover:bg-terracotta transition-all duration-300 shadow-2xl hover:shadow-gold/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-espresso-dark"
+              className="md:hidden bg-gold text-white px-4 rounded-full h-10 inline-flex items-center justify-center text-base font-medium hover:bg-terracotta transition-all duration-300 shadow-2xl hover:shadow-gold/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-espresso-dark"
               onClick={toggleMobileMenu}
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-menu"
