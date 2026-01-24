@@ -46,7 +46,7 @@ npm run preview
 
 ## 🏗️ Структура проекта
 
-```
+```text
 coffee_trip/
 ├── src/
 │   ├── components/
