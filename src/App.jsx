@@ -26,18 +26,18 @@ function App() {
 
   return (
     <div className="overflow-x-hidden">
-      <a 
-        href="#main-content" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-gold focus:text-white focus:px-4 focus:py-2 focus:rounded"
       >
         Перейти к основному содержимому
       </a>
-      
+
       <Navigation scrolled={scrolled} onOrderClick={openOrderModal} />
-      
+
       <main id="main-content">
         <Hero onOrderClick={openOrderModal} />
-        
+
         <Suspense fallback={<LoadingFallback />}>
           <About />
           <Menu />
@@ -45,15 +45,13 @@ function App() {
           <Gallery />
         </Suspense>
       </main>
-      
+
       <Suspense fallback={null}>
         <Footer />
       </Suspense>
-      
+
       <Suspense fallback={null}>
-        {isOrderModalOpen && (
-          <OrderModal isOpen={isOrderModalOpen} onClose={closeOrderModal} />
-        )}
+        {isOrderModalOpen && <OrderModal isOpen={isOrderModalOpen} onClose={closeOrderModal} />}
       </Suspense>
     </div>
   );

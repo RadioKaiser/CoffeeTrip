@@ -26,16 +26,12 @@ const MenuItem = memo(({ item, index }) => (
         <h3 className="text-2xl font-serif text-espresso-dark group-hover:text-gold transition-colors duration-300">
           {item.name}
         </h3>
-        <span className="text-xl font-semibold text-gold">
-          {item.price}
-        </span>
+        <span className="text-xl font-semibold text-gold">{item.price}</span>
       </div>
-      <p className="text-espresso-medium leading-relaxed">
-        {item.description}
-      </p>
-      <div 
-        className="mt-4 w-0 h-0.5 bg-gold group-hover:w-full transition-all duration-300" 
-        aria-hidden="true" 
+      <p className="text-espresso-medium leading-relaxed">{item.description}</p>
+      <div
+        className="mt-4 w-0 h-0.5 bg-gold group-hover:w-full transition-all duration-300"
+        aria-hidden="true"
       />
     </div>
   </motion.article>
@@ -46,7 +42,7 @@ MenuItem.displayName = 'MenuItem';
 const Menu = memo(() => {
   const [activeCategory, setActiveCategory] = useState('coffee');
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const handleCategoryChange = useCallback((categoryId) => {
     setActiveCategory(categoryId);
@@ -72,9 +68,9 @@ const Menu = memo(() => {
         </motion.div>
 
         {/* Category Tabs */}
-        <div 
-          className="flex justify-center mb-16 space-x-4" 
-          role="tablist" 
+        <div
+          className="flex justify-center mb-16 space-x-4"
+          role="tablist"
           aria-label="Категории меню"
         >
           {MENU_CATEGORIES.map((category) => (

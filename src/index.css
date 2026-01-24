@@ -1,15 +1,15 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* Цвета */
   --color-espresso-dark: #1a0f0a;
   --color-espresso-medium: #2d1810;
   --color-espresso-light: #4a2c1a;
-  
-  --color-beige-light: #F5F5DC;
+
+  --color-beige-light: #f5f5dc;
   --color-beige-medium: #e8e4d0;
   --color-beige-dark: #d4cfb8;
-  
+
   --color-gold: #c9a961;
   --color-terracotta: #c77251;
 
@@ -22,7 +22,12 @@
     @apply bg-beige-light text-espresso-dark font-sans antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
   }
 

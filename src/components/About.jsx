@@ -5,8 +5,8 @@ const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.3 }
-  }
+    transition: { staggerChildren: 0.3 },
+  },
 };
 
 const itemVariants = {
@@ -14,13 +14,13 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
+    transition: { duration: 0.8, ease: 'easeOut' },
+  },
 };
 
 const About = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section id="about" className="py-32 bg-beige-light" aria-labelledby="about-title">
@@ -29,11 +29,14 @@ const About = memo(() => {
           ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          animate={isInView ? 'visible' : 'hidden'}
           className="grid md:grid-cols-2 gap-16 items-center"
         >
           <motion.div variants={itemVariants}>
-            <h2 id="about-title" className="text-5xl md:text-6xl font-serif mb-6 text-espresso-dark">
+            <h2
+              id="about-title"
+              className="text-5xl md:text-6xl font-serif mb-6 text-espresso-dark"
+            >
               Философия кофе
             </h2>
             <div className="w-24 h-1 bg-gold mb-8" aria-hidden="true" />
@@ -42,12 +45,12 @@ const About = memo(() => {
               мастерстве обжарщиков и искусстве бариста.
             </p>
             <p className="text-lg text-espresso-medium mb-6 leading-relaxed">
-              Наши зёрна проходят путь от высокогорных ферм Эфиопии, Колумбии и Бразилии
-              до вашей чашки, сохраняя уникальный профиль вкуса.
+              Наши зёрна проходят путь от высокогорных ферм Эфиопии, Колумбии и Бразилии до вашей
+              чашки, сохраняя уникальный профиль вкуса.
             </p>
             <p className="text-lg text-espresso-medium leading-relaxed">
-              Мы обжариваем небольшими партиями, чтобы раскрыть всю глубину аромата
-              и обеспечить максимальную свежесть.
+              Мы обжариваем небольшими партиями, чтобы раскрыть всю глубину аромата и обеспечить
+              максимальную свежесть.
             </p>
           </motion.div>
 

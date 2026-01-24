@@ -8,24 +8,94 @@ export const NAV_ITEMS = [
 
 export const MENU_DATA = {
   coffee: [
-    { name: 'Эспрессо', description: 'Классический итальянский кофе', price: '150 ₽', image: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400&h=300&fit=crop' },
-    { name: 'Капучино', description: 'Эспрессо с молочной пенкой', price: '220 ₽', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop' },
-    { name: 'Флэт Уайт', description: 'Двойной эспрессо с бархатным молоком', price: '250 ₽', image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop' },
-    { name: 'Латте', description: 'Нежный кофе с молоком', price: '240 ₽', image: 'https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=400&h=300&fit=crop' },
-    { name: 'Американо', description: 'Эспрессо с горячей водой', price: '180 ₽', image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop' },
-    { name: 'Раф кофе', description: 'Авторский кофе со сливками', price: '280 ₽', image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=400&h=300&fit=crop' },
+    {
+      name: 'Эспрессо',
+      description: 'Классический итальянский кофе',
+      price: '150 ₽',
+      image: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Капучино',
+      description: 'Эспрессо с молочной пенкой',
+      price: '220 ₽',
+      image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Флэт Уайт',
+      description: 'Двойной эспрессо с бархатным молоком',
+      price: '250 ₽',
+      image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Латте',
+      description: 'Нежный кофе с молоком',
+      price: '240 ₽',
+      image: 'https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Американо',
+      description: 'Эспрессо с горячей водой',
+      price: '180 ₽',
+      image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Раф кофе',
+      description: 'Авторский кофе со сливками',
+      price: '280 ₽',
+      image: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=400&h=300&fit=crop',
+    },
   ],
   tea: [
-    { name: 'Зелёный чай', description: 'Японская сенча премиум', price: '200 ₽', image: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=300&fit=crop' },
-    { name: 'Чёрный чай', description: 'Цейлонский листовой', price: '180 ₽', image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&h=300&fit=crop' },
-    { name: 'Улун', description: 'Молочный улун с медовыми нотами', price: '250 ₽', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop' },
-    { name: 'Пуэр', description: 'Выдержанный китайский чай', price: '300 ₽', image: 'https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=400&h=300&fit=crop' },
+    {
+      name: 'Зелёный чай',
+      description: 'Японская сенча премиум',
+      price: '200 ₽',
+      image: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Чёрный чай',
+      description: 'Цейлонский листовой',
+      price: '180 ₽',
+      image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Улун',
+      description: 'Молочный улун с медовыми нотами',
+      price: '250 ₽',
+      image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Пуэр',
+      description: 'Выдержанный китайский чай',
+      price: '300 ₽',
+      image: 'https://images.unsplash.com/photo-1558160074-4d7d8bdf4256?w=400&h=300&fit=crop',
+    },
   ],
   desserts: [
-    { name: 'Круассан', description: 'Классический французский', price: '180 ₽', image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&h=300&fit=crop' },
-    { name: 'Чизкейк', description: 'Нью-Йорк стиль', price: '320 ₽', image: 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=400&h=300&fit=crop' },
-    { name: 'Тирамису', description: 'Итальянский десерт с маскарпоне', price: '350 ₽', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop' },
-    { name: 'Брауни', description: 'Шоколадный с орехами', price: '250 ₽', image: 'https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=400&h=300&fit=crop' },
+    {
+      name: 'Круассан',
+      description: 'Классический французский',
+      price: '180 ₽',
+      image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Чизкейк',
+      description: 'Нью-Йорк стиль',
+      price: '320 ₽',
+      image: 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Тирамису',
+      description: 'Итальянский десерт с маскарпоне',
+      price: '350 ₽',
+      image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
+    },
+    {
+      name: 'Брауни',
+      description: 'Шоколадный с орехами',
+      price: '250 ₽',
+      image: 'https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=400&h=300&fit=crop',
+    },
   ],
 };
 
@@ -60,15 +130,42 @@ export const LOCATIONS = [
 ];
 
 export const GALLERY_IMAGES = [
-  { src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600', alt: 'Утренний капучино с латте-артом в форме сердца' },
-  { src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600', alt: 'Чашка кофе на деревянном столе с зёрнами' },
-  { src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600', alt: 'Свежеобжаренные кофейные зёрна крупным планом' },
-  { src: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600', alt: 'Ароматный эспрессо в белой чашке' },
-  { src: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600', alt: 'Бариста готовит кофе на профессиональной кофемашине' },
-  { src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600', alt: 'Уютный интерьер кофейни с тёплым освещением' },
-  { src: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600', alt: 'Латте с корицей и печеньем' },
-  { src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600', alt: 'Посетители наслаждаются кофе в кофейне' },
-  { src: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600', alt: 'Раф кофе с карамельным топпингом' },
+  {
+    src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600',
+    alt: 'Утренний капучино с латте-артом в форме сердца',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600',
+    alt: 'Чашка кофе на деревянном столе с зёрнами',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600',
+    alt: 'Свежеобжаренные кофейные зёрна крупным планом',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600',
+    alt: 'Ароматный эспрессо в белой чашке',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600',
+    alt: 'Бариста готовит кофе на профессиональной кофемашине',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600',
+    alt: 'Уютный интерьер кофейни с тёплым освещением',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600',
+    alt: 'Латте с корицей и печеньем',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600',
+    alt: 'Посетители наслаждаются кофе в кофейне',
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600',
+    alt: 'Раф кофе с карамельным топпингом',
+  },
 ];
 
 export const SOCIAL_LINKS = [

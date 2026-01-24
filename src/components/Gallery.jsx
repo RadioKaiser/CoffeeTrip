@@ -20,7 +20,7 @@ const GalleryImage = memo(({ image, index, isInView }) => (
         width={600}
         height={400}
       />
-      <div 
+      <div
         className="absolute inset-0 bg-linear-to-t from-espresso-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         aria-hidden="true"
       >
@@ -36,7 +36,7 @@ GalleryImage.displayName = 'GalleryImage';
 
 const Gallery = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
     <section id="gallery" className="py-32 bg-beige-light" aria-labelledby="gallery-title">
@@ -48,7 +48,10 @@ const Gallery = memo(() => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 id="gallery-title" className="text-5xl md:text-6xl font-serif mb-6 text-espresso-dark">
+          <h2
+            id="gallery-title"
+            className="text-5xl md:text-6xl font-serif mb-6 text-espresso-dark"
+          >
             Галерея
           </h2>
           <div className="w-24 h-1 bg-gold mx-auto mb-8" aria-hidden="true" />
@@ -59,12 +62,7 @@ const Gallery = memo(() => {
 
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {GALLERY_IMAGES.map((image, index) => (
-            <GalleryImage 
-              key={image.src} 
-              image={image} 
-              index={index} 
-              isInView={isInView} 
-            />
+            <GalleryImage key={image.src} image={image} index={index} isInView={isInView} />
           ))}
         </div>
       </div>

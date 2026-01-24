@@ -17,7 +17,7 @@ export const useScrolled = (threshold = 50) => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    
+
     // Проверяем начальное положение
     handleScroll();
 

@@ -21,9 +21,7 @@ class ErrorBoundary extends Component {
       return (
         <div className="min-h-screen flex items-center justify-center bg-beige-light">
           <div className="text-center p-8">
-            <h1 className="text-4xl font-serif text-espresso-dark mb-4">
-              Что-то пошло не так
-            </h1>
+            <h1 className="text-4xl font-serif text-espresso-dark mb-4">Что-то пошло не так</h1>
             <p className="text-espresso-medium mb-6">
               Пожалуйста, обновите страницу или попробуйте позже
             </p>

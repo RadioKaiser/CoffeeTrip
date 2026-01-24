@@ -22,11 +22,9 @@ const LocationCard = memo(({ location, index, isInView }) => (
         height={300}
       />
     </div>
-    
-    <h3 className="text-2xl font-serif mb-4 text-gold">
-      {location.name}
-    </h3>
-    
+
+    <h3 className="text-2xl font-serif mb-4 text-gold">{location.name}</h3>
+
     <address className="space-y-3 text-beige-medium not-italic">
       <div className="flex items-start">
         <LocationIcon className="w-5 h-5 mr-3 mt-1 text-gold shrink-0" />
@@ -38,7 +36,7 @@ const LocationCard = memo(({ location, index, isInView }) => (
       </div>
       <div className="flex items-start">
         <PhoneIcon className="w-5 h-5 mr-3 mt-1 text-gold shrink-0" />
-        <a 
+        <a
           href={`tel:${location.phone.replace(/\D/g, '')}`}
           className="hover:text-gold transition-colors focus:outline-none focus:text-gold"
         >
@@ -53,10 +51,14 @@ LocationCard.displayName = 'LocationCard';
 
 const Locations = memo(() => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="locations" className="py-32 bg-espresso-dark text-beige-light" aria-labelledby="locations-title">
+    <section
+      id="locations"
+      className="py-32 bg-espresso-dark text-beige-light"
+      aria-labelledby="locations-title"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           ref={ref}
@@ -76,11 +78,11 @@ const Locations = memo(() => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {LOCATIONS.map((location, index) => (
-            <LocationCard 
-              key={location.name} 
-              location={location} 
-              index={index} 
-              isInView={isInView} 
+            <LocationCard
+              key={location.name}
+              location={location}
+              index={index}
+              isInView={isInView}
             />
           ))}
         </div>
