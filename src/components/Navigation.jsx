@@ -31,7 +31,6 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
     >
       <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Основная навигация">
         <div className="flex justify-between items-center">
-          {/* Logo */}
           <motion.a
             href="#hero"
             onClick={(e) => handleNavClick(e, 'hero')}
@@ -42,7 +41,6 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
             CoffeeTrip
           </motion.a>
 
-          {/* Desktop Navigation */}
           <ul className="hidden md:flex space-x-8 font-medium font-serif">
             {NAV_ITEMS.map((item, index) => (
               <motion.li key={item.id}>
@@ -61,7 +59,6 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
             ))}
           </ul>
 
-          {/* Order Button & Mobile Menu Toggle */}
           <div className="flex items-center space-x-4">
             <motion.button
               onClick={onOrderClick}
@@ -72,7 +69,6 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
               Заказать
             </motion.button>
 
-            {/* Mobile Menu Button */}
             <button
               className="md:hidden bg-gold text-white px-4 rounded-full h-10 inline-flex items-center justify-center text-base font-medium hover:bg-terracotta transition-all duration-300 shadow-2xl hover:shadow-gold/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-espresso-dark"
               onClick={toggleMobileMenu}
@@ -89,7 +85,6 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -122,5 +117,4 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
 });
 
 Navigation.displayName = 'Navigation';
-
 export default Navigation;

@@ -9,36 +9,42 @@ export const NAV_ITEMS = [
 export const MENU_DATA = {
   coffee: [
     {
+      id: 'espresso',
       name: 'Эспрессо',
       description: 'Классический итальянский кофе',
       price: '150 ₽',
       image: 'https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?w=400&h=300&fit=crop',
     },
     {
+      id: 'cappuccino',
       name: 'Капучино',
       description: 'Эспрессо с молочной пенкой',
       price: '220 ₽',
       image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&h=300&fit=crop',
     },
     {
+      id: 'flat-white',
       name: 'Флэт Уайт',
       description: 'Двойной эспрессо с бархатным молоком',
       price: '250 ₽',
       image: 'https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=400&h=300&fit=crop',
     },
     {
+      id: 'latte',
       name: 'Латте',
       description: 'Нежный кофе с молоком',
       price: '240 ₽',
       image: 'https://images.unsplash.com/photo-1561882468-9110e03e0f78?w=400&h=300&fit=crop',
     },
     {
+      id: 'americano',
       name: 'Американо',
       description: 'Эспрессо с горячей водой',
       price: '180 ₽',
       image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&h=300&fit=crop',
     },
     {
+      id: 'raf',
       name: 'Раф кофе',
       description: 'Авторский кофе со сливками',
       price: '280 ₽',
@@ -47,24 +53,28 @@ export const MENU_DATA = {
   ],
   tea: [
     {
+      id: 'green-tea',
       name: 'Зелёный чай',
       description: 'Японская сенча премиум',
       price: '200 ₽',
       image: 'https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=400&h=300&fit=crop',
     },
     {
+      id: 'black-tea',
       name: 'Чёрный чай',
       description: 'Цейлонский листовой',
       price: '180 ₽',
       image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&h=300&fit=crop',
     },
     {
+      id: 'oolong',
       name: 'Улун',
       description: 'Молочный улун с медовыми нотами',
       price: '250 ₽',
       image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop',
     },
     {
+      id: 'puerh',
       name: 'Пуэр',
       description: 'Выдержанный китайский чай',
       price: '300 ₽',
@@ -73,24 +83,28 @@ export const MENU_DATA = {
   ],
   desserts: [
     {
+      id: 'croissant',
       name: 'Круассан',
       description: 'Классический французский',
       price: '180 ₽',
       image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400&h=300&fit=crop',
     },
     {
+      id: 'cheesecake',
       name: 'Чизкейк',
       description: 'Нью-Йорк стиль',
       price: '320 ₽',
       image: 'https://images.unsplash.com/photo-1524351199678-941a58a3df50?w=400&h=300&fit=crop',
     },
     {
+      id: 'tiramisu',
       name: 'Тирамису',
       description: 'Итальянский десерт с маскарпоне',
       price: '350 ₽',
       image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop',
     },
     {
+      id: 'brownie',
       name: 'Брауни',
       description: 'Шоколадный с орехами',
       price: '250 ₽',
@@ -107,6 +121,7 @@ export const MENU_CATEGORIES = [
 
 export const LOCATIONS = [
   {
+    id: 'center',
     name: 'CoffeeTrip Центр',
     address: 'ул. Пушкина, 15',
     hours: 'Пн-Вс: 8:00 - 22:00',
@@ -114,6 +129,7 @@ export const LOCATIONS = [
     image: 'photo-1501339847302-ac426a4a7cbb',
   },
   {
+    id: 'arbat',
     name: 'CoffeeTrip Арбат',
     address: 'Арбатская ул., 28',
     hours: 'Пн-Вс: 9:00 - 23:00',
@@ -121,6 +137,7 @@ export const LOCATIONS = [
     image: 'photo-1511920170033-f8396924c348',
   },
   {
+    id: 'park',
     name: 'CoffeeTrip Парк',
     address: 'Парковая ул., 42',
     hours: 'Пн-Вс: 7:00 - 21:00',
@@ -131,38 +148,47 @@ export const LOCATIONS = [
 
 export const GALLERY_IMAGES = [
   {
+    id: 'cappuccino-art',
     src: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600',
     alt: 'Утренний капучино с латте-артом в форме сердца',
   },
   {
+    id: 'coffee-beans-table',
     src: 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600',
     alt: 'Чашка кофе на деревянном столе с зёрнами',
   },
   {
+    id: 'roasted-beans',
     src: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600',
     alt: 'Свежеобжаренные кофейные зёрна крупным планом',
   },
   {
+    id: 'espresso-white-cup',
     src: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600',
     alt: 'Ароматный эспрессо в белой чашке',
   },
   {
+    id: 'barista-machine',
     src: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600',
     alt: 'Бариста готовит кофе на профессиональной кофемашине',
   },
   {
+    id: 'cozy-interior',
     src: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600',
     alt: 'Уютный интерьер кофейни с тёплым освещением',
   },
   {
+    id: 'latte-cinnamon',
     src: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=600',
     alt: 'Латте с корицей и печеньем',
   },
   {
+    id: 'visitors',
     src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=600',
     alt: 'Посетители наслаждаются кофе в кофейне',
   },
   {
+    id: 'raf-caramel',
     src: 'https://images.unsplash.com/photo-1511537190424-bbbab87ac5eb?w=600',
     alt: 'Раф кофе с карамельным топпингом',
   },

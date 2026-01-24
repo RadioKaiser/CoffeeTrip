@@ -1,6 +1,7 @@
 import { memo, useState, useCallback, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLockBodyScroll } from '../hooks/useLockBodyScroll';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 import { CloseIcon } from './icons';
 
 const INITIAL_FORM_STATE = {
@@ -10,33 +11,26 @@ const INITIAL_FORM_STATE = {
   city: '',
 };
 
-const OrderModal = memo(({ isOpen, onClose }) => {
+const OrderModal = memo(({ isOpen, onClose, onSuccess }) => {
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
   const modalRef = useRef(null);
-  const firstInputRef = useRef(null);
 
   useLockBodyScroll(isOpen);
+  useFocusTrap(isOpen, modalRef);
 
-  // Focus trap
+  // Handle Escape key - moved to useEffect
   useEffect(() => {
-    if (isOpen && firstInputRef.current) {
-      firstInputRef.current.focus();
-    }
-  }, [isOpen]);
-
-  // Handle Escape key
-  useEffect(() => {
-    const handleEscape = (e) => {
+    const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      return () => document.removeEventListener('keydown', handleEscape);
+      document.addEventListener('keydown', handleKeyDown);
+      return () => document.removeEventListener('keydown', handleKeyDown);
     }
   }, [isOpen, onClose]);
 
@@ -50,6 +44,7 @@ const OrderModal = memo(({ isOpen, onClose }) => {
       e.preventDefault();
 
       const newErrors = {};
+
       if (!formData.name.trim()) {
         newErrors.name = 'Введите имя';
       }
@@ -71,21 +66,18 @@ const OrderModal = memo(({ isOpen, onClose }) => {
       setIsSubmitting(true);
       setErrors({});
 
-      // Имитация отправки на сервер
+      const submittedData = { ...formData };
+
       await new Promise((resolve) => {
         setTimeout(resolve, 1500);
       });
 
       setFormData(INITIAL_FORM_STATE);
       setIsSubmitting(false);
-      onClose();
 
-      // Показать уведомление
-      alert(
-        `Спасибо, ${formData.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${formData.phone}`
-      );
+      onSuccess?.(submittedData);
     },
-    [formData, onClose]
+    [formData, onSuccess]
   );
 
   const handleChange = useCallback(
@@ -93,7 +85,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
       const { name, value } = e.target;
       setFormData((prev) => ({ ...prev, [name]: value }));
 
-      // Очистить ошибку при изменении
       if (errors[name]) {
         setErrors((prev) => ({ ...prev, [name]: undefined }));
       }
@@ -119,7 +110,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
           aria-labelledby="modal-title"
           className="fixed inset-0 z-50 flex items-center justify-center"
         >
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -129,7 +119,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
             aria-hidden="true"
           />
 
-          {/* Modal */}
           <motion.div
             ref={modalRef}
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
@@ -138,7 +127,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
             transition={{ type: 'spring', duration: 0.5 }}
             className="relative bg-beige-light rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 max-h-[90vh] overflow-y-auto"
           >
-            {/* Close Button */}
             <motion.button
               onClick={onClose}
               className="absolute top-4 right-4 text-espresso-medium hover:text-espresso-dark transition-colors focus:outline-none focus:ring-2 focus:ring-gold rounded-full p-1"
@@ -149,7 +137,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               <CloseIcon />
             </motion.button>
 
-            {/* Header */}
             <div className="text-center mb-8">
               <h2 id="modal-title" className="text-4xl font-serif text-espresso-dark mb-2">
                 Оформить заказ
@@ -158,7 +145,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               <p className="text-espresso-medium">Заполните форму и мы свяжемся с вами</p>
             </div>
 
-            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
                 <label
@@ -171,7 +157,6 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                   </span>
                 </label>
                 <input
-                  ref={firstInputRef}
                   type="text"
                   id="order-name"
                   name="name"
@@ -349,5 +334,4 @@ const OrderModal = memo(({ isOpen, onClose }) => {
 });
 
 OrderModal.displayName = 'OrderModal';
-
 export default OrderModal;

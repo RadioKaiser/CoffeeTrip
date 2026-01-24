@@ -1,6 +1,7 @@
 import { memo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { GALLERY_IMAGES } from '../constants/data';
+import Image from './Image';
 
 const GalleryImage = memo(({ image, index, isInView }) => (
   <motion.figure
@@ -8,10 +9,10 @@ const GalleryImage = memo(({ image, index, isInView }) => (
     animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
     transition={{ delay: index * 0.1, duration: 0.6 }}
     whileHover={{ scale: 1.05 }}
-    className="break-inside-avoid cursor-pointer group overflow-hidden rounded-2xl"
+    className="break-inside-avoid group overflow-hidden rounded-2xl"
   >
     <div className="relative overflow-hidden rounded-2xl shadow-lg">
-      <img
+      <Image
         src={image.src}
         alt={image.alt}
         className="w-full h-auto transition-transform duration-500 group-hover:scale-110"
@@ -62,7 +63,7 @@ const Gallery = memo(() => {
 
         <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {GALLERY_IMAGES.map((image, index) => (
-            <GalleryImage key={image.src} image={image} index={index} isInView={isInView} />
+            <GalleryImage key={image.id} image={image} index={index} isInView={isInView} />
           ))}
         </div>
       </div>
@@ -71,5 +72,4 @@ const Gallery = memo(() => {
 });
 
 Gallery.displayName = 'Gallery';
-
 export default Gallery;

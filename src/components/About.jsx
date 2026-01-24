@@ -1,5 +1,6 @@
 import { memo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from './Image';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -57,7 +58,7 @@ const About = memo(() => {
           <motion.div variants={itemVariants} className="relative">
             <div className="relative h-125 rounded-2xl overflow-hidden shadow-2xl">
               <div className="absolute inset-0 bg-linear-to-br from-espresso-medium to-espresso-light opacity-90" />
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800"
                 alt="Россыпь свежеобжаренных кофейных зёрен арабики"
                 className="w-full h-full object-cover mix-blend-overlay"
@@ -81,5 +82,4 @@ const About = memo(() => {
 });
 
 About.displayName = 'About';
-
 export default About;

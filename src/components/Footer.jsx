@@ -1,4 +1,4 @@
-import { memo, useState, useCallback } from 'react';
+import { memo, useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { NAV_ITEMS, SOCIAL_LINKS, CONTACT_INFO } from '../constants/data';
 import { SocialIcon } from './icons';
@@ -7,12 +7,22 @@ const Footer = memo(() => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const timeoutRef = useRef(null);
+
+  // Cleanup при unmount
+  useEffect(
+    () => () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    },
+    []
+  );
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Имитация отправки
     await new Promise((resolve) => {
       setTimeout(resolve, 1000);
     });
@@ -21,7 +31,7 @@ const Footer = memo(() => {
     setEmail('');
     setIsSubmitting(false);
 
-    setTimeout(() => setSubmitStatus(null), 3000);
+    timeoutRef.current = setTimeout(() => setSubmitStatus(null), 3000);
   }, []);
 
   const handleNavClick = useCallback((e, id) => {
@@ -40,7 +50,6 @@ const Footer = memo(() => {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Brand */}
           <div>
             <h3 className="text-3xl font-serif mb-4">CoffeeTrip</h3>
             <p className="text-beige-medium mb-6 leading-relaxed">
@@ -65,7 +74,6 @@ const Footer = memo(() => {
             </ul>
           </div>
 
-          {/* Navigation */}
           <nav aria-label="Дополнительная навигация">
             <h4 className="text-xl font-serif mb-4 text-gold">Навигация</h4>
             <ul className="space-y-2">
@@ -84,7 +92,6 @@ const Footer = memo(() => {
             </ul>
           </nav>
 
-          {/* Contacts */}
           <div>
             <h4 className="text-xl font-serif mb-4 text-gold">Контакты</h4>
             <address className="space-y-3 text-beige-medium not-italic">
@@ -108,7 +115,6 @@ const Footer = memo(() => {
             </address>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h4 className="text-xl font-serif mb-4 text-gold">Рассылка</h4>
             <p className="text-beige-medium mb-4 text-sm">
@@ -147,7 +153,6 @@ const Footer = memo(() => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="border-t border-espresso-medium pt-8 flex flex-col md:flex-row justify-between items-center text-beige-medium text-sm">
           <p>© {new Date().getFullYear()} CoffeeTrip. Все права защищены.</p>
           <nav className="flex space-x-6 mt-4 md:mt-0" aria-label="Юридическая информация">
@@ -173,5 +178,4 @@ const Footer = memo(() => {
 });
 
 Footer.displayName = 'Footer';
-
 export default Footer;

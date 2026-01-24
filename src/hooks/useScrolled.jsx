@@ -4,6 +4,8 @@ export const useScrolled = (threshold = 50) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     let ticking = false;
 
     const handleScroll = () => {
@@ -17,8 +19,6 @@ export const useScrolled = (threshold = 50) => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Проверяем начальное положение
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);

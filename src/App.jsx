@@ -1,9 +1,9 @@
-import { useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense, useCallback } from 'react';
 import { useScrolled } from './hooks/useScrolled';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
+import Toast from './components/Toast';
 
-// Lazy load компоненты ниже fold
 const About = lazy(() => import('./components/About'));
 const Menu = lazy(() => import('./components/Menu'));
 const Locations = lazy(() => import('./components/Locations'));
@@ -12,7 +12,7 @@ const Footer = lazy(() => import('./components/Footer'));
 const OrderModal = lazy(() => import('./components/OrderModal'));
 
 const LoadingFallback = () => (
-  <div className="flex items-center justify-center py-32">
+  <div className="flex items-center justify-center py-32" role="status" aria-label="Загрузка">
     <div className="w-8 h-8 border-4 border-gold border-t-transparent rounded-full animate-spin" />
   </div>
 );
@@ -20,9 +20,28 @@ const LoadingFallback = () => (
 function App() {
   const scrolled = useScrolled(50);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [toast, setToast] = useState({ isVisible: false, message: '' });
 
-  const openOrderModal = () => setIsOrderModalOpen(true);
-  const closeOrderModal = () => setIsOrderModalOpen(false);
+  const openOrderModal = useCallback(() => setIsOrderModalOpen(true), []);
+  const closeOrderModal = useCallback(() => setIsOrderModalOpen(false), []);
+
+  const showToast = useCallback((message) => {
+    setToast({ isVisible: true, message });
+  }, []);
+
+  const hideToast = useCallback(() => {
+    setToast({ isVisible: false, message: '' });
+  }, []);
+
+  const handleOrderSuccess = useCallback(
+    (data) => {
+      closeOrderModal();
+      showToast(
+        `Спасибо, ${data.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${data.phone}`
+      );
+    },
+    [closeOrderModal, showToast]
+  );
 
   return (
     <div className="overflow-x-hidden">
@@ -37,7 +56,6 @@ function App() {
 
       <main id="main-content">
         <Hero onOrderClick={openOrderModal} />
-
         <Suspense fallback={<LoadingFallback />}>
           <About />
           <Menu />
@@ -51,8 +69,21 @@ function App() {
       </Suspense>
 
       <Suspense fallback={null}>
-        {isOrderModalOpen && <OrderModal isOpen={isOrderModalOpen} onClose={closeOrderModal} />}
+        {isOrderModalOpen && (
+          <OrderModal
+            isOpen={isOrderModalOpen}
+            onClose={closeOrderModal}
+            onSuccess={handleOrderSuccess}
+          />
+        )}
       </Suspense>
+
+      <Toast
+        message={toast.message}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+        type="success"
+      />
     </div>
   );
 }

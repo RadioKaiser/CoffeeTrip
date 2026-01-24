@@ -1,17 +1,17 @@
 import { memo, useRef, useState, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MENU_DATA, MENU_CATEGORIES } from '../constants/data';
+import Image from './Image';
 
-const MenuItem = memo(({ item, index }) => (
+const MenuItem = memo(({ item }) => (
   <motion.article
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: index * 0.1 }}
     whileHover={{ y: -10, transition: { duration: 0.3 } }}
-    className="bg-beige-light rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer group"
+    className="bg-beige-light rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow duration-300 group"
   >
     <div className="h-48 overflow-hidden">
-      <img
+      <Image
         src={item.image}
         alt={item.name}
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -67,7 +67,6 @@ const Menu = memo(() => {
           </p>
         </motion.div>
 
-        {/* Category Tabs */}
         <div
           className="flex justify-center mb-16 space-x-4"
           role="tablist"
@@ -94,16 +93,18 @@ const Menu = memo(() => {
           ))}
         </div>
 
-        {/* Menu Items Grid */}
         <motion.div
+          key={activeCategory}
           id={`panel-${activeCategory}`}
           role="tabpanel"
           aria-labelledby={`tab-${activeCategory}`}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          layout
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
         >
-          {MENU_DATA[activeCategory].map((item, index) => (
-            <MenuItem key={item.name} item={item} index={index} />
+          {MENU_DATA[activeCategory].map((item) => (
+            <MenuItem key={item.id} item={item} />
           ))}
         </motion.div>
       </div>
@@ -112,5 +113,4 @@ const Menu = memo(() => {
 });
 
 Menu.displayName = 'Menu';
-
 export default Menu;

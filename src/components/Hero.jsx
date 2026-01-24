@@ -18,7 +18,6 @@ const Hero = memo(({ onOrderClick }) => {
       className="relative h-screen flex items-center justify-center overflow-hidden"
       aria-label="Главный экран"
     >
-      {/* Background with Parallax */}
       <motion.div
         style={{ y }}
         className="absolute inset-0 bg-linear-to-br from-espresso-dark via-espresso-medium to-espresso-light"
@@ -34,7 +33,6 @@ const Hero = memo(({ onOrderClick }) => {
         />
       </motion.div>
 
-      {/* Content */}
       <motion.div
         style={{ opacity }}
         className="relative z-10 text-center text-beige-light px-6 max-w-5xl"
@@ -47,7 +45,6 @@ const Hero = memo(({ onOrderClick }) => {
         >
           CoffeeTrip
         </motion.h1>
-
         <motion.p
           className="text-2xl md:text-4xl mb-8 font-light"
           initial={{ opacity: 0, y: 50 }}
@@ -56,7 +53,6 @@ const Hero = memo(({ onOrderClick }) => {
         >
           Путешествие в каждой чашке
         </motion.p>
-
         <motion.p
           className="text-lg md:text-xl mb-12 text-beige-medium max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 50 }}
@@ -65,7 +61,6 @@ const Hero = memo(({ onOrderClick }) => {
         >
           Откройте для себя мир изысканного кофе премиум класса
         </motion.p>
-
         <motion.button
           onClick={onOrderClick}
           className="bg-gold text-white px-12 py-4 rounded-full text-lg font-medium hover:bg-terracotta transition-all duration-300 shadow-2xl hover:shadow-gold/50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-espresso-dark"
@@ -79,7 +74,6 @@ const Hero = memo(({ onOrderClick }) => {
         </motion.button>
       </motion.div>
 
-      {/* Scroll Indicator */}
       <motion.div
         className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
         initial={{ opacity: 0 }}
@@ -99,5 +93,4 @@ const Hero = memo(({ onOrderClick }) => {
 });
 
 Hero.displayName = 'Hero';
-
 export default Hero;

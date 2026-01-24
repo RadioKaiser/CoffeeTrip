@@ -2,6 +2,7 @@ import { memo, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { LOCATIONS } from '../constants/data';
 import { LocationIcon, ClockIcon, PhoneIcon } from './icons';
+import Image from './Image';
 
 const LocationCard = memo(({ location, index, isInView }) => (
   <motion.article
@@ -9,10 +10,10 @@ const LocationCard = memo(({ location, index, isInView }) => (
     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
     transition={{ delay: index * 0.2, duration: 0.8 }}
     whileHover={{ y: -10 }}
-    className="bg-espresso-medium rounded-2xl p-8 hover:bg-espresso-light transition-all duration-300 cursor-pointer group"
+    className="bg-espresso-medium rounded-2xl p-8 hover:bg-espresso-light transition-all duration-300 group"
   >
     <div className="h-48 bg-linear-to-br from-gold to-terracotta rounded-xl mb-6 overflow-hidden">
-      <img
+      <Image
         src={`https://images.unsplash.com/${location.image}?w=400&h=300&fit=crop`}
         alt={`Интерьер кофейни ${location.name}`}
         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -22,9 +23,7 @@ const LocationCard = memo(({ location, index, isInView }) => (
         height={300}
       />
     </div>
-
     <h3 className="text-2xl font-serif mb-4 text-gold">{location.name}</h3>
-
     <address className="space-y-3 text-beige-medium not-italic">
       <div className="flex items-start">
         <LocationIcon className="w-5 h-5 mr-3 mt-1 text-gold shrink-0" />
@@ -78,12 +77,7 @@ const Locations = memo(() => {
 
         <div className="grid md:grid-cols-3 gap-8">
           {LOCATIONS.map((location, index) => (
-            <LocationCard
-              key={location.name}
-              location={location}
-              index={index}
-              isInView={isInView}
-            />
+            <LocationCard key={location.id} location={location} index={index} isInView={isInView} />
           ))}
         </div>
       </div>
@@ -92,5 +86,4 @@ const Locations = memo(() => {
 });
 
 Locations.displayName = 'Locations';
-
 export default Locations;
