@@ -11,14 +11,16 @@ const Footer = memo(() => {
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Имитация отправки
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
+
     setSubmitStatus('success');
     setEmail('');
     setIsSubmitting(false);
-    
+
     setTimeout(() => setSubmitStatus(null), 3000);
   }, []);
 
@@ -31,7 +33,11 @@ const Footer = memo(() => {
   }, []);
 
   return (
-    <footer id="contacts" className="bg-espresso-dark text-beige-light pt-20 pb-10" role="contentinfo">
+    <footer
+      id="contacts"
+      className="bg-espresso-dark text-beige-light pt-20 pb-10"
+      role="contentinfo"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
@@ -83,7 +89,7 @@ const Footer = memo(() => {
             <h4 className="text-xl font-serif mb-4 text-gold">Контакты</h4>
             <address className="space-y-3 text-beige-medium not-italic">
               <p>
-                <a 
+                <a
                   href={`tel:${CONTACT_INFO.phone.replace(/\D/g, '')}`}
                   className="hover:text-gold transition-colors focus:outline-none focus:text-gold"
                 >
@@ -91,7 +97,7 @@ const Footer = memo(() => {
                 </a>
               </p>
               <p>
-                <a 
+                <a
                   href={`mailto:${CONTACT_INFO.email}`}
                   className="hover:text-gold transition-colors focus:outline-none focus:text-gold"
                 >

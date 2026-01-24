@@ -16,7 +16,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen(prev => !prev);
+    setMobileMenuOpen((prev) => !prev);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex space-x-8 font-medium font-serif" role="list">
+          <ul className="hidden md:flex space-x-8 font-medium font-serif">
             {NAV_ITEMS.map((item, index) => (
               <motion.li key={item.id}>
                 <motion.a
@@ -80,7 +80,11 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
               aria-controls="mobile-menu"
               aria-label={mobileMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
             >
-              {mobileMenuOpen ? <CloseIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+              {mobileMenuOpen ? (
+                <CloseIcon className="w-5 h-5" />
+              ) : (
+                <MenuIcon className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -96,7 +100,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
               transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden bg-espresso-dark text-beige-light shadow-2xl rounded-b-2xl rounded-t-2xl mt-3"
             >
-              <ul className="py-4 space-y-2" role="list">
+              <ul className="py-4 space-y-2">
                 {NAV_ITEMS.map((item) => (
                   <li key={item.id}>
                     <a

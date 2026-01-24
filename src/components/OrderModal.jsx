@@ -7,7 +7,7 @@ const INITIAL_FORM_STATE = {
   name: '',
   phone: '',
   street: '',
-  city: ''
+  city: '',
 };
 
 const OrderModal = memo(({ isOpen, onClose }) => {
@@ -45,57 +45,70 @@ const OrderModal = memo(({ isOpen, onClose }) => {
     return cleaned.length >= 10 && cleaned.length <= 12;
   };
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
-    
-    const newErrors = {};
-    if (!formData.name.trim()) {
-      newErrors.name = 'Введите имя';
-    }
-    if (!validatePhone(formData.phone)) {
-      newErrors.phone = 'Введите корректный номер телефона';
-    }
-    if (!formData.street.trim()) {
-      newErrors.street = 'Введите адрес';
-    }
-    if (!formData.city.trim()) {
-      newErrors.city = 'Введите город';
-    }
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+      const newErrors = {};
+      if (!formData.name.trim()) {
+        newErrors.name = 'Введите имя';
+      }
+      if (!validatePhone(formData.phone)) {
+        newErrors.phone = 'Введите корректный номер телефона';
+      }
+      if (!formData.street.trim()) {
+        newErrors.street = 'Введите адрес';
+      }
+      if (!formData.city.trim()) {
+        newErrors.city = 'Введите город';
+      }
 
-    setIsSubmitting(true);
-    setErrors({});
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
 
-    // Имитация отправки на сервер
-    await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsSubmitting(true);
+      setErrors({});
 
-    setFormData(INITIAL_FORM_STATE);
-    setIsSubmitting(false);
-    onClose();
-    
-    // Показать уведомление
-    alert(`Спасибо, ${formData.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${formData.phone}`);
-  }, [formData, onClose]);
+      // Имитация отправки на сервер
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1500);
+      });
 
-  const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Очистить ошибку при изменении
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
-    }
-  }, [errors]);
-
-  const handleBackdropClick = useCallback((e) => {
-    if (e.target === e.currentTarget) {
+      setFormData(INITIAL_FORM_STATE);
+      setIsSubmitting(false);
       onClose();
-    }
-  }, [onClose]);
+
+      // Показать уведомление
+      alert(
+        `Спасибо, ${formData.name}! Ваш заказ принят. Мы свяжемся с вами по номеру ${formData.phone}`
+      );
+    },
+    [formData, onClose]
+  );
+
+  const handleChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({ ...prev, [name]: value }));
+
+      // Очистить ошибку при изменении
+      if (errors[name]) {
+        setErrors((prev) => ({ ...prev, [name]: undefined }));
+      }
+    },
+    [errors]
+  );
+
+  const handleBackdropClick = useCallback(
+    (e) => {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   return (
     <AnimatePresence>
@@ -122,7 +135,7 @@ const OrderModal = memo(({ isOpen, onClose }) => {
             initial={{ opacity: 0, scale: 0.9, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 50 }}
-            transition={{ type: "spring", duration: 0.5 }}
+            transition={{ type: 'spring', duration: 0.5 }}
             className="relative bg-beige-light rounded-3xl shadow-2xl max-w-md w-full mx-4 p-8 max-h-[90vh] overflow-y-auto"
           >
             {/* Close Button */}
@@ -142,16 +155,20 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                 Оформить заказ
               </h2>
               <div className="w-16 h-1 bg-gold mx-auto mb-4" aria-hidden="true" />
-              <p className="text-espresso-medium">
-                Заполните форму и мы свяжемся с вами
-              </p>
+              <p className="text-espresso-medium">Заполните форму и мы свяжемся с вами</p>
             </div>
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
-                <label htmlFor="order-name" className="block text-sm font-medium text-espresso-dark mb-2">
-                  Имя <span className="text-terracotta" aria-hidden="true">*</span>
+                <label
+                  htmlFor="order-name"
+                  className="block text-sm font-medium text-espresso-dark mb-2"
+                >
+                  Имя{' '}
+                  <span className="text-terracotta" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   ref={firstInputRef}
@@ -165,8 +182,8 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                   aria-invalid={!!errors.name}
                   aria-describedby={errors.name ? 'name-error' : undefined}
                   className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
-                    errors.name 
-                      ? 'border-terracotta focus:border-terracotta' 
+                    errors.name
+                      ? 'border-terracotta focus:border-terracotta'
                       : 'border-beige-dark focus:border-gold'
                   }`}
                   placeholder="Иван Иванов"
@@ -180,8 +197,14 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label htmlFor="order-phone" className="block text-sm font-medium text-espresso-dark mb-2">
-                  Телефон <span className="text-terracotta" aria-hidden="true">*</span>
+                <label
+                  htmlFor="order-phone"
+                  className="block text-sm font-medium text-espresso-dark mb-2"
+                >
+                  Телефон{' '}
+                  <span className="text-terracotta" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="tel"
@@ -196,8 +219,8 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                   inputMode="tel"
                   autoComplete="tel"
                   className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
-                    errors.phone 
-                      ? 'border-terracotta focus:border-terracotta' 
+                    errors.phone
+                      ? 'border-terracotta focus:border-terracotta'
                       : 'border-beige-dark focus:border-gold'
                   }`}
                   placeholder="+7 (999) 123-45-67"
@@ -211,8 +234,14 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label htmlFor="order-street" className="block text-sm font-medium text-espresso-dark mb-2">
-                  Улица и дом <span className="text-terracotta" aria-hidden="true">*</span>
+                <label
+                  htmlFor="order-street"
+                  className="block text-sm font-medium text-espresso-dark mb-2"
+                >
+                  Улица и дом{' '}
+                  <span className="text-terracotta" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -226,8 +255,8 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                   aria-describedby={errors.street ? 'street-error' : undefined}
                   autoComplete="street-address"
                   className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
-                    errors.street 
-                      ? 'border-terracotta focus:border-terracotta' 
+                    errors.street
+                      ? 'border-terracotta focus:border-terracotta'
                       : 'border-beige-dark focus:border-gold'
                   }`}
                   placeholder="ул. Пушкина, д. 15"
@@ -241,8 +270,14 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               </div>
 
               <div>
-                <label htmlFor="order-city" className="block text-sm font-medium text-espresso-dark mb-2">
-                  Город <span className="text-terracotta" aria-hidden="true">*</span>
+                <label
+                  htmlFor="order-city"
+                  className="block text-sm font-medium text-espresso-dark mb-2"
+                >
+                  Город{' '}
+                  <span className="text-terracotta" aria-hidden="true">
+                    *
+                  </span>
                 </label>
                 <input
                   type="text"
@@ -256,8 +291,8 @@ const OrderModal = memo(({ isOpen, onClose }) => {
                   aria-describedby={errors.city ? 'city-error' : undefined}
                   autoComplete="address-level2"
                   className={`w-full px-4 py-3 rounded-xl bg-white border-2 transition-colors text-espresso-dark focus:outline-none ${
-                    errors.city 
-                      ? 'border-terracotta focus:border-terracotta' 
+                    errors.city
+                      ? 'border-terracotta focus:border-terracotta'
                       : 'border-beige-dark focus:border-gold'
                   }`}
                   placeholder="Москва"
@@ -279,9 +314,25 @@ const OrderModal = memo(({ isOpen, onClose }) => {
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
                     </svg>
                     Отправка...
                   </span>
