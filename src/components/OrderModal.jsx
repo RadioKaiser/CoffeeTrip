@@ -20,7 +20,6 @@ const OrderModal = memo(({ isOpen, onClose, onSuccess }) => {
   useLockBodyScroll(isOpen);
   useFocusTrap(isOpen, modalRef);
 
-  // Handle Escape key - moved to useEffect
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {

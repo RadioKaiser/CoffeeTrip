@@ -9,7 +9,6 @@ const Footer = memo(() => {
   const [submitStatus, setSubmitStatus] = useState(null);
   const timeoutRef = useRef(null);
 
-  // Cleanup при unmount
   useEffect(
     () => () => {
       if (timeoutRef.current) {
