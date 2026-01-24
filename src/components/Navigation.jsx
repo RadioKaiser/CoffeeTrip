@@ -22,7 +22,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-effect shadow-lg' : 'bg-transparent'
+        scrolled ? 'glass-effect shadow-lg text-espresso-dark' : 'bg-transparent text-beige-light'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -43,7 +43,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <ul className="hidden md:flex space-x-8 font-medium" role="list">
+          <ul className="hidden md:flex space-x-8 font-medium font-serif" role="list">
             {NAV_ITEMS.map((item, index) => (
               <motion.li key={item.id}>
                 <motion.a
@@ -102,7 +102,7 @@ const Navigation = memo(({ scrolled, onOrderClick }) => {
                     <a
                       href={`#${item.id}`}
                       onClick={(e) => handleNavClick(e, item.id)}
-                      className="block py-3 px-4 rounded-lg hover:bg-beige-medium transition-colors focus:outline-none focus:bg-beige-medium"
+                      className="block py-3 px-4 rounded-lg hover:bg-beige-medium transition-colors focus:outline-none focus:bg-beige-medium font-serif"
                     >
                       {item.label}
                     </a>
