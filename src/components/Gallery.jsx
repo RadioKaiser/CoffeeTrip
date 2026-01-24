@@ -21,7 +21,7 @@ const GalleryImage = memo(({ image, index, isInView }) => (
         height={400}
       />
       <div 
-        className="absolute inset-0 bg-gradient-to-t from-espresso-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 bg-linear-to-t from-espresso-dark/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         aria-hidden="true"
       >
         <figcaption className="absolute bottom-6 left-6 text-beige-light">

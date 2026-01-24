@@ -1,6 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Цвета */
+  --color-espresso-dark: #1a0f0a;
+  --color-espresso-medium: #2d1810;
+  --color-espresso-light: #4a2c1a;
+  
+  --color-beige-light: #F5F5DC;
+  --color-beige-medium: #e8e4d0;
+  --color-beige-dark: #d4cfb8;
+  
+  --color-gold: #c9a961;
+  --color-terracotta: #c77251;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
 
 @layer base {
   body {
@@ -11,72 +26,38 @@
     @apply font-serif;
   }
 
-  /* Улучшенный фокус для доступности */
-  *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-gold;
-  }
-
-  /* Плавный скролл */
   html {
     scroll-behavior: smooth;
   }
 
-  /* Убираем outline для мыши, оставляем для клавиатуры */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold;
+  }
+
   *:focus:not(:focus-visible) {
     outline: none;
   }
 }
 
-@layer utilities {
-  .glass-effect {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(245, 245, 220, 0.8);
-  }
-
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-terracotta;
-  }
-
-  /* Skip link для доступности */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-  }
-
-  .sr-only.focus\:not-sr-only:focus {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: inherit;
-    margin: inherit;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
-  }
-
-  /* Уменьшение анимаций для пользователей с предпочтениями */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
+@utility glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(245, 245, 220, 0.8);
 }
 
-@layer components {
-  /* Общие стили для фокуса */
-  .focus-ring {
-    @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2;
+@utility text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, var(--color-gold), var(--color-terracotta));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

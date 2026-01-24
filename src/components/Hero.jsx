@@ -21,7 +21,7 @@ const Hero = memo(({ onOrderClick }) => {
       {/* Background with Parallax */}
       <motion.div
         style={{ y }}
-        className="absolute inset-0 bg-gradient-to-br from-espresso-dark via-espresso-medium to-espresso-light"
+        className="absolute inset-0 bg-linear-to-br from-espresso-dark via-espresso-medium to-espresso-light"
       >
         <div 
           className="absolute inset-0 opacity-20 bg-cover bg-center"

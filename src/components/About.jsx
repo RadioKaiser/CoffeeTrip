@@ -52,8 +52,8 @@ const About = memo(() => {
           </motion.div>
 
           <motion.div variants={itemVariants} className="relative">
-            <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl">
-              <div className="absolute inset-0 bg-gradient-to-br from-espresso-medium to-espresso-light opacity-90" />
+            <div className="relative h-125 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-linear-to-br from-espresso-medium to-espresso-light opacity-90" />
               <img
                 src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800"
                 alt="Россыпь свежеобжаренных кофейных зёрен арабики"
