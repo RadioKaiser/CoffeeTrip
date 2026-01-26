@@ -1,25 +1,68 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@theme {
+  /* Цвета */
+  --color-espresso-dark: #1a0f0a;
+  --color-espresso-medium: #2d1810;
+  --color-espresso-light: #4a2c1a;
+
+  --color-beige-light: #f5f5dc;
+  --color-beige-medium: #e8e4d0;
+  --color-beige-dark: #d4cfb8;
+
+  --color-gold: #c9a961;
+  --color-terracotta: #c77251;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+}
 
 @layer base {
   body {
-    @apply bg-beige-light text-espresso-dark font-sans;
+    @apply bg-beige-light text-espresso-dark font-sans antialiased;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-gold;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
   }
 }
 
-@layer utilities {
-  .glass-effect {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    background: rgba(245, 245, 220, 0.8);
-  }
-  
-  .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold to-terracotta;
+@utility glass-effect {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(245, 245, 220, 0.8);
+}
+
+@utility text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, var(--color-gold), var(--color-terracotta));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
